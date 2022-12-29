@@ -1,0 +1,29 @@
+{
+  "resorts": [
+    {
+      "name": "Stacja narciarska 'Czarnów'",
+      "address": "Pisarzowice 44, 58-400 Kamienna Góra",
+      "coords": [50.78310502678361, 15.962189128871497]
+    },
+    {
+      "name": "Ski Arena Łysa Góra",
+      "address": "Dziwiszów",
+      "coords": [50.961086534780165, 15.80400627396643]
+    },
+    {
+      "name": "Stacja narciarska Kamienica",
+      "address": "Kamienica 1A, Stronie Śląskie",
+      "coords": [50.251665768746086, 16.88673489986848]
+    },
+    {
+      "name": "Ośrodek narciarski Czarna Góra",
+      "address": "Sienna 4",
+      "coords": [50.26170270304523, 16.820936344569247]
+    },
+    {
+      "name": "Kolej Gondolowa Świeradów-Zdrój",
+      "address": "ul. Źródlana 7",
+      "coords": [50.91014935345589, 15.320069853666737]
+    }
+  ]
+}
