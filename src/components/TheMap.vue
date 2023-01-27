@@ -7,7 +7,10 @@ import "leaflet/dist/leaflet.css";
 import "leaflet"
 import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 import MapCard from "../components/MapCard.vue"
-import data from "./../data/data.json"
+// import data from "./../data/data.json"
+
+import { useMapStore } from "../stores/MapStore"
+const mapStore = useMapStore();
 
 interface Resort {
   name: String,
@@ -22,8 +25,7 @@ const resorts: Ref<Array<Resort>> = ref([]);
 
 const center = ref([51.505, -0.09]);
 
-const moveTo = () => {
-  // example how to handle LeafletObject
+const moveTo = () => { // example how to handle LeafletObject
   // @ts-expect-error
   globalMapObj.value.leafletObject.flyTo(center.value);
   // @ts-expect-error
@@ -34,10 +36,10 @@ const moveTo = () => {
 }
 
 onMounted(() => {
-  resorts.value = data.resorts;
-  nextTick(() => {
-    // @ts-expect-error
-    globalMapObj.value = map.value;
+  resorts.value = mapStore.resorts;
+
+  nextTick(() => { // @ts-expect-error
+    mapStore.mapGlobalObject = map.value;
   })
 })
 
