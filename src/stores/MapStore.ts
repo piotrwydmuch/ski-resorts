@@ -5,6 +5,7 @@ export const useMapStore = defineStore("MapStore", {
   state: () => {
     return {
       mapGlobalObject: {},
+      markersLayer: {},
       resorts: resorts.resorts,
     }
   }

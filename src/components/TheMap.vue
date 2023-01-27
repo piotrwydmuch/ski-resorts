@@ -1,42 +1,51 @@
-
-
 <script setup lang="ts">
-import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LPopup,
+  LLayerGroup,
+} from "@vue-leaflet/vue-leaflet";
 import { onMounted, ref, nextTick, getCurrentInstance } from "vue";
-import MapCard from "../components/MapCard.vue"
+import MapCard from "../components/MapCard.vue";
 import "leaflet/dist/leaflet.css";
-import "leaflet"
+import "leaflet";
 import type { Resort } from "../types";
-import type { Ref } from 'vue'
-import { useMapStore } from "../stores/MapStore" 
+import { Ref, watch } from "vue";
+import { useMapStore } from "../stores/MapStore";
 
 const mapStore = useMapStore();
-const map: Ref<unknown> = ref(null)
-const zoom: Ref<number> = ref(8); 
+const map: Ref<unknown> = ref(null);
+const zoom: Ref<number> = ref(8);
 const resorts: Ref<Array<Resort>> = ref([]);
-const center = ref([50.60, 16.90]);
+const center = ref([50.6, 16.9]);
+const markersLayer: Ref<LLayerGroup> = ref();
 
-const moveTo = () => { // example how to handle LeafletObject
+const moveTo = () => {
+  // example how to handle LeafletObject
   // @ts-expect-error
   mapStore.mapGlobalObject.leafletObject.flyTo(center.value);
-}
+};
 
 onMounted(() => {
   resorts.value = mapStore.resorts;
-  nextTick(() => { // @ts-expect-error
+  nextTick(() => {
+    // @ts-expect-error
     mapStore.mapGlobalObject = map.value;
-  })
-})
 
+    // console.log(Object.values(markersLayer.value.leafletObject._layers));
+    // mapStore.markersLayer = Object.values(markersLayer.value.leafletObject._layers);
+  });
+});
 </script>
 
 <template>
-  <div style="height:100vh; width:100%">
+  <div style="height: 100vh; width: 100%">
     <button @click="moveTo()">Click me</button>
-    <l-map 
+    <l-map
       ref="map"
       v-model:zoom="zoom"
-      :center="[50.60, 16.90]"
+      :center="[50.6, 16.9]"
       :minZoom="5"
       :maxZoom="18"
       :zoomAnimation="true"
@@ -47,14 +56,20 @@ onMounted(() => {
         layer-type="base"
         name="OpenStreetMap"
       ></l-tile-layer>
-      <l-marker v-for="pin in resorts" :lat-lng="pin.coords" >
-        <l-popup>
-          <MapCard :name="pin.name" :address="pin.address" />
-        </l-popup>
-      </l-marker>
+      <l-layer-group ref="markersLayer">
+        <l-marker
+          v-for="marker in resorts"
+          :lat-lng="marker.coords"
+          :key="marker.id"
+          :name="`marker_${marker.id}`"
+        >
+          <l-popup>
+            <MapCard :name="marker.name" :address="marker.address" />
+          </l-popup>
+        </l-marker>
+      </l-layer-group>
     </l-map>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
