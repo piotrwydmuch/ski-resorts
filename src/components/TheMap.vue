@@ -14,7 +14,7 @@ const mapStore = useMapStore();
 const map: Ref<unknown> = ref(null)
 const zoom: Ref<number> = ref(8); 
 const resorts: Ref<Array<Resort>> = ref([]);
-const center = ref([51.505, -0.09]);
+const center = ref([50.60, 16.90]);
 
 const moveTo = () => { // example how to handle LeafletObject
   // @ts-expect-error
