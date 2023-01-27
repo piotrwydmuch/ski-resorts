@@ -1,43 +1,28 @@
 
 
 <script setup lang="ts">
+import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 import { onMounted, ref, nextTick, getCurrentInstance } from "vue";
-import type { Ref } from 'vue'
+import MapCard from "../components/MapCard.vue"
 import "leaflet/dist/leaflet.css";
 import "leaflet"
-import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
-import MapCard from "../components/MapCard.vue"
-// import data from "./../data/data.json"
+import type { Resort } from "../types";
+import type { Ref } from 'vue'
+import { useMapStore } from "../stores/MapStore" 
 
-import { useMapStore } from "../stores/MapStore"
 const mapStore = useMapStore();
-
-interface Resort {
-  name: String,
-  address: String,
-  coords: number[],
-}
-
 const map: Ref<unknown> = ref(null)
-const globalMapObj = ref(null);
 const zoom: Ref<number> = ref(8); 
 const resorts: Ref<Array<Resort>> = ref([]);
-
 const center = ref([51.505, -0.09]);
 
 const moveTo = () => { // example how to handle LeafletObject
   // @ts-expect-error
-  globalMapObj.value.leafletObject.flyTo(center.value);
-  // @ts-expect-error
-  console.log(globalMapObj.value.leafletObject.getPanes().markerPane);
-
-  console.log(getCurrentInstance())
-
+  mapStore.mapGlobalObject.leafletObject.flyTo(center.value);
 }
 
 onMounted(() => {
   resorts.value = mapStore.resorts;
-
   nextTick(() => { // @ts-expect-error
     mapStore.mapGlobalObject = map.value;
   })
@@ -47,6 +32,7 @@ onMounted(() => {
 
 <template>
   <div style="height:100vh; width:100%">
+    <button @click="moveTo()">Click me</button>
     <l-map 
       ref="map"
       v-model:zoom="zoom"
@@ -67,7 +53,6 @@ onMounted(() => {
         </l-popup>
       </l-marker>
     </l-map>
-    <button @click="moveTo()">Click me</button>
   </div>
 </template>
 
