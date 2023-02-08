@@ -10,16 +10,22 @@ import { useMapStore } from "../stores/MapStore"
 
 const store = useMapStore();
 const resorts: Ref<Array<Resort>> = ref([]);
-const markerLayer: Ref<unknown> = ref();
   
-  const onClick = (id: Number) => {
-    // move this ID to some type of store or config (?)
-  markerLayer.value = store.mapGlobalObject.leafletObject._layers[74];
-  const markers = Object.values(markerLayer.value.getLayers());
-
-  markers.forEach(e => console.log(e.options.name))
-  // THINK HOW TO CATCH SINGLE MARKER AND OPEN POPUP ON HIM
+const flyTo = (coords: number[]) => {
+  // @ts-expect-error
+  store.mapGlobalObject.leafletObject.flyTo(coords);
 }
+
+// OLD (DELETE IT WHEN DONT NEED THIS ANYMORE)
+// 
+//   const flyTo = (coords: Array<number, number>) => {
+//     // move this ID to some type of store or config (?)
+//   markerLayer.value = store.mapGlobalObject.leafletObject._layers[74];
+//   const markers = Object.values(markerLayer.value.getLayers());
+
+//   markers.forEach(e => console.log(e.options.name))
+//   // THINK HOW TO CATCH SINGLE MARKER AND OPEN POPUP ON HIM
+// }
 
 onMounted(() => {
   resorts.value = store.resorts;
@@ -30,7 +36,7 @@ onMounted(() => {
 <template>
   <div class="sidebar">
     <ul class="resorts">
-      <li v-for="(resort, i) in resorts" @click="onClick(resort.id)" class="resorts__single" :key="i">
+      <li v-for="(resort, i) in resorts" @click="flyTo(resort.coords)" class="resorts__single" :key="i">
         <h2>{{ resort.name }}</h2>
         <p>{{ resort.address }}</p>
       </li>
