@@ -41,7 +41,6 @@ onMounted(() => {
 
 <template>
   <div style="height: 100vh; width: 100%">
-    <button @click="moveTo()">Click me</button>
     <l-map
       ref="map"
       v-model:zoom="zoom"
