@@ -16,17 +16,6 @@ const flyTo = (coords: number[]) => {
   store.mapGlobalObject.leafletObject.flyTo(coords);
 }
 
-// OLD (DELETE IT WHEN DONT NEED THIS ANYMORE)
-// 
-//   const flyTo = (coords: Array<number, number>) => {
-//     // move this ID to some type of store or config (?)
-//   markerLayer.value = store.mapGlobalObject.leafletObject._layers[74];
-//   const markers = Object.values(markerLayer.value.getLayers());
-
-//   markers.forEach(e => console.log(e.options.name))
-//   // THINK HOW TO CATCH SINGLE MARKER AND OPEN POPUP ON HIM
-// }
-
 onMounted(() => {
   resorts.value = store.resorts;
 })
@@ -42,7 +31,6 @@ onMounted(() => {
       </li>
     </ul>
   </div>
-
 </template>
 
 <style scoped>
