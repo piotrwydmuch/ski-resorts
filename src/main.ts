@@ -8,7 +8,3 @@ const app = createApp(App);
 
 app.use(pinia)
 app.mount('#app');
-
-app.config.globalProperties.cosTam = {
-  1: "example",
-}

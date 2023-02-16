@@ -25,7 +25,12 @@ onMounted(() => {
 <template>
   <div class="sidebar">
     <ul class="resorts">
-      <li v-for="(resort, i) in resorts" @click="flyTo(resort.coords)" class="resorts__single" :key="i">
+      <li 
+        v-for="(resort, i) in resorts" 
+        @click="flyTo(resort.coords)" 
+        class="resorts__single" 
+        :key="i"
+      >
         <h2>{{ resort.name }}</h2>
         <p>{{ resort.address }}</p>
       </li>
